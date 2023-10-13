@@ -1,6 +1,9 @@
 # Introduction to Angular Framework
 
-## 3.Alternate component input
+## 4. *ngFor Directive
+
+
+## 3. Alternate component input / *ngIf Directive
 
 
 
