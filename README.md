@@ -1,5 +1,8 @@
 # Introduction to Angular Framework
 
+## 6. Component Output
+
+
 ## 5. Event Binding 
 
 
