@@ -1,8 +1,9 @@
 export interface Person {
-    givenName: string,
-    surName: string,
-    age: number,
-    email: string,
-    address: string,
-    photoURL? : string
+    id?: number;
+    givenName: string;
+    surName: string;
+    age: number;
+    email: string;
+    address: string;
+    photoURL? : string;
 }
