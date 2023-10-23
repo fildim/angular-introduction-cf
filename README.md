@@ -1,5 +1,8 @@
 # Introduction to Angular Framework
 
+## 12. CRUD Users: Read User
+
+
 ## 10. CRUD Users Scaffolding
 
 
