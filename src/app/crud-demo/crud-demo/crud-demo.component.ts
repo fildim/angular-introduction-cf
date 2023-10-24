@@ -28,4 +28,8 @@ export class CrudDemoComponent {
     this.crudOperation = operation;
   }
 
+  listUsers() {
+    this.crudOperation = "list";
+  }
+
 }

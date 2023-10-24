@@ -25,7 +25,7 @@ export class ReactiveFormComponent {
 
   onSumbit() {
     this.person.emit(this.form.value as Person);
-    this;
+    this.form.reset();
   }
 
 
