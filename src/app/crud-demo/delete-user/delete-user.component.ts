@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Inject, Output, ViewChild } from '
 import { CommonModule } from '@angular/common';
 import { Person } from 'src/app/interfaces/person';
 import { AppService } from 'src/app/app.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-delete-user',
@@ -18,12 +19,30 @@ export class DeleteUserComponent {
   foundUser: Person | undefined;
   userNotFound = false;
 
-  constructor(private service: AppService = Inject(AppService)) {}
+  constructor(
+    // private service: AppService = Inject(AppService),
+    private http: HttpClient = Inject(HttpClient)
+  ) {}
 
 
   onClick() {
     const id = this.userIdInput.nativeElement.value;
-    this.service.deleteUser(parseInt(id)).subscribe({
+
+    // this.service.deleteUser(parseInt(id)).subscribe({
+    //   next: (user) => {
+    //     console.log(user);
+    //     this.userDeleted.emit();
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     this.userNotFound = true;
+    //   },
+    //   complete: () => {
+    //     "Delete operation completed";
+    //   }
+    // });
+
+    this.http.delete<Person>(`http://localhost:3000/users/${id}`).subscribe({
       next: (user) => {
         console.log(user);
         this.userDeleted.emit();
@@ -35,7 +54,9 @@ export class DeleteUserComponent {
       complete: () => {
         "Delete operation completed";
       }
-    });
+    });  
+
+
   }
 
 }
