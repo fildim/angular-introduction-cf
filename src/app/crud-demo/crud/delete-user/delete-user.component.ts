@@ -3,11 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Person } from 'src/app/interfaces/person';
 import { AppService } from 'src/app/app.service';
 import { HttpClient } from '@angular/common/http';
+import { CrudUserSearchComponent } from '../../utils/crud-user-search/crud-user-search.component';
+import { PersonCardComponent } from 'src/app/person-card/person-card.component';
+import { DangerPromptComponent } from '../../utils/danger-prompt/danger-prompt.component';
 
 @Component({
   selector: 'app-delete-user',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    CrudUserSearchComponent,
+    PersonCardComponent,
+    DangerPromptComponent
+  ],
   templateUrl: './delete-user.component.html',
   styleUrls: ['./delete-user.component.css']
 })
@@ -20,7 +28,7 @@ export class DeleteUserComponent {
   userNotFound = false;
 
   constructor(
-    // private service: AppService = Inject(AppService),
+    private service: AppService = Inject(AppService),
     private http: HttpClient = Inject(HttpClient)
   ) {}
 
@@ -56,7 +64,37 @@ export class DeleteUserComponent {
       }
     });  
 
+  };
 
+  onUserFound(user: Person | undefined) {
+    if (user) {
+      this.foundUser = user;
+    };
+  };
+
+  onConfirm(confirmation: boolean) {
+    if (confirmation && this.foundUser) {
+      const id = this.foundUser.id ?? -1;
+
+      this.service.deleteUser(id).subscribe({
+        next: (user) => {
+          console.log(user);
+          this.userDeleted.emit();
+        },
+        error: (error) => {
+          console.log(error);
+          this.userNotFound = true;
+        },
+        complete: () => {
+          "Delete operation completed";
+        }
+      });
+    } else {
+      
+      this.foundUser = undefined;
+    }
+    
+    
   }
 
 }

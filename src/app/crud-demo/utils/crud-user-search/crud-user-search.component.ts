@@ -1,28 +1,26 @@
-import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppService } from 'src/app/app.service';
 import { Person } from 'src/app/interfaces/person';
-import { PersonCardComponent } from 'src/app/person-card/person-card.component';
+import { AppService } from 'src/app/app.service';
 
 @Component({
-  selector: 'app-read-user',
+  selector: 'app-crud-user-search',
   standalone: true,
-  imports: [
-    CommonModule,
-    PersonCardComponent
-  ],
-  templateUrl: './read-user.component.html',
-  styleUrls: ['./read-user.component.css']
+  imports: [CommonModule],
+  templateUrl: './crud-user-search.component.html',
+  styleUrls: ['./crud-user-search.component.css']
 })
-export class ReadUserComponent {
+export class CrudUserSearchComponent {
 
   @ViewChild('userId') userIdInput!: ElementRef<HTMLInputElement>;
   foundUser: Person | undefined;
   userNotFound = false;
 
-  constructor(private service: AppService = Inject(AppService)) {}
+  @Output() userFound = new EventEmitter<Person | undefined>();
 
-  onClick() {
+  constructor(private service: AppService = Inject(AppService)) {};
+
+  onSearch() {
     const id = this.userIdInput.nativeElement.value;
 
     this.service.getUserById(parseInt(id)).subscribe({
@@ -30,17 +28,18 @@ export class ReadUserComponent {
         console.log(user);
         
         this.foundUser = user;
+        this.userFound.emit(this.foundUser);
       },
       error: (error) => {
         this.foundUser = undefined;
         this.userNotFound = true;
         console.log(error);
+        this.userFound.emit(this.foundUser);
       },
       complete: () => {
         console.log("Operation completed");
       }
-    })
-  }
-
+    });
+  };
 
 }
