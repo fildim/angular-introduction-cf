@@ -1,6 +1,12 @@
 # Introduction to Angular Framework
 
-## 15. CRUD Users: Utility Components
+## 17. CRUD Users: Update User
+
+
+## 16. CRUD Users: Utility Components
+
+
+## 15. CRUD Users: Housekeeping
 
 
 ## 14. CRUD Users: Delete User
