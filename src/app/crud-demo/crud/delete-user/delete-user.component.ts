@@ -90,10 +90,8 @@ export class DeleteUserComponent {
         }
       });
     } else {
-      
       this.foundUser = undefined;
-    }
-    
+    }   
     
   }
 
